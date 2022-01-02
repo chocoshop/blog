@@ -6,4 +6,6 @@ services:
     volumes:
      - ./:/var/www/
     tty: true
-    working_dir: /var/www/
+    working_dir: /var/www
+    ports:
+      - '80:80'
