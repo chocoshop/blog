@@ -1,5 +1,5 @@
 import * as http from 'http';
-import Route from './modules/route';
+import Route from './modules/Route';
 import routes from './routes';
 
 const port = 80;
