@@ -12,7 +12,7 @@ export default class Route {
         this.routes = routes;
     }
 
-    async initilize(): Promise<{controller, method}> {
+    async initilize(): Promise<{controller: string, method: string}> {
         for(const [route, action] of Object.entries(this.routes)) {
             if (route === this.req.url) {
                 // todo: error handling
