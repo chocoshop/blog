@@ -1,6 +1,9 @@
-import Route from "../../Route";
+import Controller from '../../Controllers';
+import Route from '../../Route';
 
-test('リクエストされたパスと登録されたルーティングが一致した場合、オブジェクトを返す', () => {
-    expect(true).toBeTruthy();
-    // expect(route.initilize()).toEqual({});
+test('一致したルーティングある場合は、Controllerのインスタンスを返す', async() => {
+    const route = new Route('/test', {'/test': 'TestController@index'});
+    route.controller_dir = '/var/www/modules/tests/Route'
+    const action = await route.initilize();
+    expect(action.controller).toBeInstanceOf(Controller);
 })

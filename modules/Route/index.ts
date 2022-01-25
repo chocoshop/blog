@@ -1,24 +1,23 @@
-import * as http from "http";
 const rootDir = require('app-root-path');
 
 export default class Route {
-    private req: http.IncomingMessage;
-    private res: http.ServerResponse;
+    private url: string;
     private routes: {[key: string]: string};
+    public controller_dir: string;
 
-    constructor(req: http.IncomingMessage, res: http.ServerResponse, routes: {}) {
-        this.req = req;
-        this.res = res;
+    constructor(url: string, routes: {[path: string]: string}) {
+        this.url = url;
         this.routes = routes;
+        this.controller_dir = `${rootDir.path}/App/Http`;
     }
 
     async initilize(): Promise<{controller: string, method: string}> {
         for(const [route, action] of Object.entries(this.routes)) {
-            if (route === this.req.url) {
+            if (route === this.url) {
                 // todo: error handling
                 const [controller, method, ...parameter] = action.split('@');
                 // todo: ルートの場所を別クラスにしてデフォルト値を設定する
-                const {default: Controller} = await import(`${rootDir.path}/App/Http/${controller}`);
+                const {default: Controller} = await import(`${this.controller_dir}/${controller}`);
                 return {controller: new Controller(), method: method};
             }
         }
