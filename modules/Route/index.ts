@@ -1,3 +1,5 @@
+import Controller from "../Controllers";
+
 const rootDir = require('app-root-path');
 
 export default class Route {
@@ -11,17 +13,23 @@ export default class Route {
         this.controller_dir = `${rootDir.path}/App/Http`;
     }
 
-    async initilize(): Promise<{controller: string, method: string}> {
+    async initilize(): Promise<{controller: Controller, method: string}> {
         for(const [route, action] of Object.entries(this.routes)) {
+            const [controller, method, ...parameter] = action.split('@');
             if (route === this.url) {
-                // todo: error handling
-                const [controller, method, ...parameter] = action.split('@');
-                // todo: ルートの場所を別クラスにしてデフォルト値を設定する
-                const {default: Controller} = await import(`${this.controller_dir}/${controller}`);
-                return {controller: new Controller(), method: method};
+                const instance = await this.getControllerInstance(controller);
+                return {controller: instance, method: method};
             }
         }
-        console.log('Not Found');
-        return;
+        throw new Error('Route Not Found');
+    }
+
+    async getControllerInstance(controller): Promise<Controller>{
+        // 一度変数に入れないとアクセスできない..?
+        const dir = this.controller_dir;
+
+        // todo: ルートの場所を別クラスにしてデフォルト値を設定する
+        const {default: Controller} = await import(`${dir}/${controller}`);
+        return new Controller();
     }
 }

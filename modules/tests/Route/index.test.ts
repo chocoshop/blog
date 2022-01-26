@@ -7,3 +7,9 @@ test('一致したルーティングある場合は、Controllerのインスタ�
     const action = await route.initilize();
     expect(action.controller).toBeInstanceOf(Controller);
 })
+
+test('一致するルーティングがない場合は、例外を投げる', async() => {
+    const route = new Route('/notfound', {'/test': 'TestController@index'});
+    const action = route.initilize();
+    await expect(action).rejects.toThrow(new Error('Route Not Found'));
+});
