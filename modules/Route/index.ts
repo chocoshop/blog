@@ -24,7 +24,7 @@ export default class Route {
         throw new Error('Route Not Found');
     }
 
-    async getControllerInstance(controller): Promise<Controller>{
+    async getControllerInstance(controller: string): Promise<Controller>{
         // 一度変数に入れないとアクセスできない..?
         const dir = this.controller_dir;
 
