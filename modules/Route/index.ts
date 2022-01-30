@@ -16,13 +16,14 @@ export default class Route {
     async initilize(): Promise<{controller: Controller, method: string}> {
         for(const [route, action] of Object.entries(this.routes)) {
             const [controller, method, ...parameter] = action.split('@');
-            if (route === this.url) {
-                const instance = await this.getControllerInstance(controller);
-                if (!this.isMethodExist(instance, method)) {
-                    throw new Error('Method Not Found');
-                }
-                return {controller: instance, method: method};
+            if (route != this.url) {
+                continue;
             }
+            const instance = await this.getControllerInstance(controller);
+            if (!this.isMethodExist(instance, method)) {
+                throw new Error('Method Not Found');
+            }
+            return {controller: instance, method: method};
         }
         throw new Error('Route Not Found');
     }
