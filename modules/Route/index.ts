@@ -18,6 +18,9 @@ export default class Route {
             const [controller, method, ...parameter] = action.split('@');
             if (route === this.url) {
                 const instance = await this.getControllerInstance(controller);
+                if (!this.isMethodExist(instance, method)) {
+                    throw new Error('Method Not Found');
+                }
                 return {controller: instance, method: method};
             }
         }
@@ -35,5 +38,12 @@ export default class Route {
         } catch (e) {
             throw new Error('Could Not Load Controller');
         }
+    }
+
+    isMethodExist(controller: Controller, method: string): boolean {
+        if (typeof controller[method] === 'function') {
+            return true;
+        }
+        return false;
     }
 }
