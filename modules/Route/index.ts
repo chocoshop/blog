@@ -29,7 +29,11 @@ export default class Route {
         const dir = this.controller_dir;
 
         // todo: ルートの場所を別クラスにしてデフォルト値を設定する
-        const {default: Controller} = await import(`${dir}/${controller}`);
-        return new Controller();
+        try {
+            const {default: Controller} = await import(`${dir}/${controller}`);
+            return new Controller();
+        } catch (e) {
+            throw new Error('Could Not Load Controller');
+        }
     }
 }
