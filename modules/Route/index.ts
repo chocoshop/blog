@@ -1,20 +1,17 @@
 import Controller from "../Controllers";
-
-const rootDir = require('app-root-path');
+import RouteProvider from "../Provider/RouteProvider";
 
 export default class Route {
     private url: string;
-    private routes: {[key: string]: string};
-    public controller_dir: string;
+    private provider: RouteProvider;
 
-    constructor(url: string, routes: {[path: string]: string}) {
+    constructor(url: string, provider: RouteProvider) {
         this.url = url;
-        this.routes = routes;
-        this.controller_dir = `${rootDir.path}/App/Http`;
+        this.provider = provider;
     }
 
     async initilize(): Promise<{controller: Controller, method: string}> {
-        for(const [route, action] of Object.entries(this.routes)) {
+        for(const [route, action] of Object.entries(this.provider.routes)) {
             const [controller, method, ...parameter] = action.split('@');
             if (route != this.url) {
                 continue;
@@ -30,7 +27,7 @@ export default class Route {
 
     async getControllerInstance(controller: string): Promise<Controller>{
         // 一度変数に入れないとアクセスできない..?
-        const dir = this.controller_dir;
+        const dir = this.provider.controller_dir;
 
         // todo: ルートの場所を別クラスにしてデフォルト値を設定する
         try {
