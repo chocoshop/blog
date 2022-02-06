@@ -1,4 +1,4 @@
-const routes = {
+const routes: Routes = {
     '/' : 'Controller@get',
     '/a' : 'Controller@getA',
 };
