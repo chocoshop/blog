@@ -1,44 +1,40 @@
+import { RouteResolver } from './../Resolver/RouteResolver';
 import Controller from "../Controllers";
-import RouteProvider from "../Provider/RouteProvider";
+import load from '../Support/FileLoader';
 
 export default class Route {
     private url: string;
-    private provider: RouteProvider;
+    private resolver: RouteResolver;
 
-    constructor(url: string, provider: RouteProvider) {
+    constructor(url: string) {
         this.url = url;
-        this.provider = provider;
+        this.resolver = new RouteResolver();
     }
 
-    async initilize(): Promise<{controller: Controller, method: string}> {
-        for(const [route, action] of Object.entries(this.provider.routes)) {
-            const [controller, method, ...parameter] = action.split('@');
-            if (route != this.url) {
-                continue;
-            }
-            const instance = await this.getControllerInstance(controller);
-            if (!this.isMethodExist(instance, method)) {
-                throw new Error('Method Not Found');
-            }
-            return {controller: instance, method: method};
+    async initilize(): Promise<{controller: Controller, method: string}|void> {
+        const resolver = await this.resolver.resolve(this.url);
+        const action = resolver.getAction();
+        if (!action) {
+            return;
         }
-        throw new Error('Route Not Found');
+        const instance = await this.getControllerInstance(action.getController());
+        if (!this.isMethodExist(instance, action.getMethod())) {
+            return;
+        }
+        return {controller: instance, method: action.getMethod()};
     }
 
-    async getControllerInstance(controller: string): Promise<Controller>{
-        // 一度変数に入れないとアクセスできない..?
-        const dir = this.provider.controller_dir;
-
-        // todo: ルートの場所を別クラスにしてデフォルト値を設定する
+    async getControllerInstance(path: string): Promise<Controller> {
         try {
-            const {default: Controller} = await import(`${dir}/${controller}`);
-            return new Controller();
+            // any書きたくない....todo: 別の設計か型推論が通るように変更する
+            const controller = await load<{default: Controller}>(path) as any;
+            return new controller.default() as Controller;
         } catch (e) {
-            throw new Error('Could Not Load Controller');
+            throw e;
         }
     }
 
-    isMethodExist(controller: Controller, method: string): boolean {
+    isMethodExist(controller: any, method: string): boolean {
         if (typeof controller[method] === 'function') {
             return true;
         }
