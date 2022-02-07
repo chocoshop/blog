@@ -13,3 +13,13 @@ describe('createAction', () => {
         expect((new RouteResolver()).createAction('/test', {'/test': 'TestController@index'})).toBeInstanceOf(Action);
     });
 });
+
+describe('getControllerPath', () => {
+    test('コントローラーのファイルパスを返す', async () => {
+        load.default.mockImplementationOnce(() => {
+            return {'/': 'Controller@index'};
+        })
+        const resolver = await (new RouteResolver()).resolve('/');
+        expect(resolver.getControllerPath()).toBe('/var/www/App/Http/Controller');
+    })
+})

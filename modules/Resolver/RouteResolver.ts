@@ -4,11 +4,12 @@ import load from "../Support/FileLoader";
 export class RouteResolver {
     private routes: Routes = {};
     private action: Action|null = null;
-    protected rootDir: string = require('app-root-path') + '/App/Http/';
+    public rootDir: string = require('app-root-path') + '/App/Http';
 
     async resolve(path: string) {
         this.routes = await load<Routes>(this.rootDir);
         this.action = this.createAction(path, this.routes);
+        return this;
     }
 
     createAction(path: string, routes: Routes): Action {
@@ -22,6 +23,14 @@ export class RouteResolver {
 
     getRoutes() {
         return this.routes;
+    }
+
+    getAction() {
+        return this.action;
+    }
+
+    public getControllerPath(): string|null {
+        return `${this.rootDir}/${this.action?.getController()}`
     }
 
     isMethodExist() {
