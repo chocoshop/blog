@@ -1,6 +1,5 @@
 import { RouteResolver } from './../Resolver/RouteResolver';
 import Controller from "../Controllers";
-import load from '../Support/FileLoader';
 
 export default class Route {
     private url: string;
@@ -18,20 +17,19 @@ export default class Route {
             return;
         }
         const instance = await this.getControllerInstance(action.getController());
+        if (!instance) {
+            return;
+        }
         if (!this.isMethodExist(instance, action.getMethod())) {
             return;
         }
         return {controller: instance, method: action.getMethod()};
     }
 
+    // 型安全に書く方法がわからない..読み込むむジュールがany型になるのと、default exportかそうでないかの区別がつかない
     async getControllerInstance(path: string): Promise<Controller> {
-        try {
-            // any書きたくない....todo: 別の設計か型推論が通るように変更する
-            const controller = await load<{default: Controller}>(path) as any;
-            return new controller.default() as Controller;
-        } catch (e) {
-            throw e;
-        }
+        const controller = await import(path);
+        return new controller.default();
     }
 
     isMethodExist(controller: any, method: string): boolean {
