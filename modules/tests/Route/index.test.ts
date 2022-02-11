@@ -1,7 +1,5 @@
 import Controller from '../../Controllers';
-import RouteResolver from '../../../App/Resolver/RouteResolver';
 import Route from '../../Route';
-import Action from '../../Http/Action';
 import TestController from './TestController';
 
 describe('getControllerInstance', () => {
