@@ -9,7 +9,7 @@ describe('createAction', () => {
         .toThrowError(new Error('Route Not Registered'));
     });
 
-    test('ルーティング存在する場合はActionクラスのインスタンスを生成する', () => {
+    test('ルーティングが存在する場合はActionクラスのインスタンスを生成する', () => {
         expect((new RouteResolver()).createAction('/test', {'/test': 'TestController@index'})).toBeInstanceOf(Action);
     });
 });
