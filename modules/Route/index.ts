@@ -34,4 +34,11 @@ export default class Route {
             return null;
         }
     }
+
+    isMethodExist(controller: Controller<Methods>, method: string): boolean {
+        if (typeof controller[method as keyof typeof controller] === 'function') {
+            return true;
+        }
+        return false;
+    }
 }

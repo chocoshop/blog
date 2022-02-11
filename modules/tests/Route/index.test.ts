@@ -16,6 +16,13 @@ describe('getControllerInstance', () => {
     });
 })
 
+test('存在するメソッドの場合はtrueを返す', () => {
+    const route = new Route('/test');
+    expect(route.isMethodExist(new TestController(), 'index')).toBe(true);
+});
+
+
+
 // test('実行されるメソッドが存在しない場合、例外を投げる', async () => {
 //     const resolver = new RouteResolver({'/test': 'TestController@not_exist_method'});
 //     resolver.controller_dir = '/var/www/modules/tests/Route';
