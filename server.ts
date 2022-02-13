@@ -1,15 +1,16 @@
 import * as http from 'http';
+import { RouteResolver } from './modules/Resolver/RouteResolver';
 import Route from './modules/Route';
-import routes from './routes';
 
 const port = 80;
 
-const server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
-    const route =  new Route(req.url, routes);
-    route.initilize()
-        .then(({controller, method}) => {
-            controller[method](req, res);
-        });
+const server = http.createServer(async (req: http.IncomingMessage, res: http.ServerResponse) => {
+    if (req.url === undefined) {
+        return;
+    }
+    const route =  new Route(req.url, new RouteResolver());
+    const response = await route.exec();
+    res.end(response);
 });
 
 server.listen(port, () => {
