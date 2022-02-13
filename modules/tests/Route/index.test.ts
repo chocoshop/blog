@@ -3,6 +3,7 @@ import Controller from '../../Controllers';
 import Action from '../../Http/Action';
 import Route from '../../Route';
 import TestController from './TestController';
+// jest.mock('./../../Resolver/RouteResolver');
 
 describe('getControllerInstance', () => {
     test('Controllerのインスタンスを返す', async () => {
@@ -31,23 +32,32 @@ describe('isMethodExist', () => {
 test('コントローラーのメソッドを実行する', () => {
     const route = new Route('/test', new RouteResolver());
     expect(route.execController(new Action('TestController@index'), new TestController())).resolves.toBeTruthy();
-})
+});
 
-jest.mock('./../../Resolver/RouteResolver');
-const mock = RouteResolver as jest.Mock;
-test('アクションがnullの場合は、例外を投げる', async () => {
-    mock.mockImplementationOnce(() => {
-        return {
-            resolve() {
-                return {
-                    getAction() {
-                        return null;
-                    }
-                };
+test('コントローラーのインスタンスがnullの場合は、例外を投げる', async () => {
+    jest.spyOn(RouteResolver.prototype, 'resolve')
+        .mockResolvedValue(new Promise(() => {
+            return {
+                getAction() {
+                    return new Action('TestController@index');
+                }
             }
-        }
-    })
+        }));
+    jest.spyOn(Route.prototype, 'getControllerInstance')
+        .mockReturnValue(new Promise(() => null));
+    
     const route = new Route('', new RouteResolver());
+    expect(() => route.exec()).rejects.toThrow(new Error('Given Controller Instance is null'));
+});
 
+test('アクションがnullの場合は、例外を投げる', async () => {
+    jest.spyOn(RouteResolver.prototype, 'resolve')
+        .mockResolvedValue(new Promise(() => {
+            return {
+                getAction() {
+                    return null;
+            }}
+        }));
+    const route = new Route('', new RouteResolver());
     expect(() => route.exec()).rejects.toThrow(new Error('Given Action is null'));
-})
+});

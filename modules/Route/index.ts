@@ -18,6 +18,10 @@ export default class Route {
             throw new Error('Given Action is null')
         }
         const instance = await this.getControllerInstance(action.getController());
+        if (instance === null) {
+            throw new Error('Given Controller Instance is null');
+        }
+        
 
         // return this.execController(action);
     }
