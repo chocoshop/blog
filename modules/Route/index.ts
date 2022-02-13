@@ -6,23 +6,26 @@ export default class Route {
     private url: string;
     private resolver: RouteResolver;
 
-    constructor(url: string) {
+    constructor(url: string, resolver: RouteResolver) {
         this.url = url;
-        this.resolver = new RouteResolver();
+        this.resolver = resolver;
     }
 
     async exec() {
         const resolver = await this.resolver.resolve(this.url);
         const action = resolver.getAction();
-        if (!action) {
-            return;
+        if (action === null) {
+            throw new Error('Given Action is null')
         }
+        const instance = await this.getControllerInstance(action.getController());
 
-        return this.execController(action);
+        // return this.execController(action);
     }
 
-    async execController(action: Action): Promise<Controller<Methods>|void> {
-        const instance = await this.getControllerInstance(action.getController());
+    async execController(action: Action, controller: Controller<Methods>): Promise<Controller<Methods>|void> {
+        if (this.isMethodExist(controller, action.getMethod())) {
+            return controller[action.getMethod() as keyof typeof controller]();
+        }
     }
 
     // 型安全に書く方法がわからない..読み込むモジュールがany型になるのと、default exportかそうでないかの区別がつかない
