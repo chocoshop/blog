@@ -1,6 +1,4 @@
-const routes: Routes = {
+module.exports = {
     '/' : 'Controller@get',
     '/a' : 'Controller@getA',
-};
-
-export default routes;
+}
