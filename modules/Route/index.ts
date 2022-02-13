@@ -14,16 +14,16 @@ export default class Route {
     async exec() {
         const resolver = await this.resolver.resolve(this.url);
         const action = resolver.getAction();
+        
         if (action === null) {
             throw new Error('Given Action is null')
         }
-        const instance = await this.getControllerInstance(action.getController());
-        if (instance === null) {
+        const controller = await this.getControllerInstance(`${resolver.rootDir}/App/Http/${action.getController()}`);
+        if (controller === null) {
             throw new Error('Given Controller Instance is null');
         }
         
-
-        // return this.execController(action);
+        return this.execController(action, controller);
     }
 
     async execController(action: Action, controller: Controller<Methods>): Promise<Controller<Methods>|void> {
