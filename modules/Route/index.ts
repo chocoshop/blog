@@ -20,7 +20,7 @@ export default class Route {
         }
         const controller = await this.getControllerInstance(resolver.getControllerPath());
         if (controller === null) {
-            throw new Error('Given Controller Instance is null');
+            throw new Error('Could not load Controller');
         }
         
         return this.execController(action, controller);

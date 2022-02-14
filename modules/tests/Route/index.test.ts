@@ -42,7 +42,7 @@ test('コントローラーのインスタンスがnullの場合は、例外を�
         .mockReturnValue(new Promise(() => null));
     
     const route = new Route('', new RouteResolver());
-    expect(() => route.exec()).rejects.toThrow(new Error('Given Controller Instance is null'));
+    expect(() => route.exec()).rejects.toThrow(new Error('Could not load Controller'));
 });
 
 test('アクションがnullの場合は、例外を投げる', async () => {
