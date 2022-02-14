@@ -23,19 +23,11 @@ export class RouteResolver {
         throw new Error('Route Not Registered');
     }
 
-    getRoutes() {
-        return this.routes;
-    }
-
     getAction() {
         return this.action;
     }
 
     public getControllerPath(): string|null {
         return `${this.controllerDir}/${this.action?.getController()}`
-    }
-
-    isMethodExist() {
-
     }
 }
