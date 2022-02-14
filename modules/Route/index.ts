@@ -18,7 +18,7 @@ export default class Route {
         if (action === null) {
             throw new Error('Given Action is null')
         }
-        const controller = await this.getControllerInstance(`${resolver.rootDir}/App/Http/${action.getController()}`);
+        const controller = await this.getControllerInstance(`${resolver.controllerDir}${action.getController()}`);
         if (controller === null) {
             throw new Error('Given Controller Instance is null');
         }

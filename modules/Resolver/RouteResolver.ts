@@ -1,13 +1,15 @@
 import Action from "../Http/Action";
 import load from "../Support/FileLoader";
+const rootPath = require('app-root-path');
 
 export class RouteResolver {
     private routes: Routes = {};
     private action: Action|null = null;
-    public rootDir: string = require('app-root-path');
+    public routesFilePath: string = `${rootPath}/routes.ts`;
+    public controllerDir: string =`${rootPath}/App/Http`;
 
     async resolve(path: string) {
-        this.routes = await load<Routes>(`${this.rootDir}/routes.ts`);
+        this.routes = await load<Routes>(this.routesFilePath);
         this.action = this.createAction(path, this.routes);
         return this;
     }
@@ -30,7 +32,7 @@ export class RouteResolver {
     }
 
     public getControllerPath(): string|null {
-        return `${this.rootDir}/App/Http/${this.action?.getController()}`
+        return `${this.controllerDir}/${this.action?.getController()}`
     }
 
     isMethodExist() {
