@@ -11,7 +11,7 @@ export default class Route {
         this.resolver = resolver;
     }
 
-    async exec() {
+    async exec(): Promise<Controller<Methods>|void> {
         const resolver = await this.resolver.resolve(this.url);
         const action = resolver.getAction();
         
