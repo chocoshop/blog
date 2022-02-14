@@ -8,11 +8,11 @@ export default class Action {
         this.action = action;
     }
 
-    getController(): string {
+    public getController(): string {
         return this.action.split('@')[0];
     }
 
-    getMethod(): string {
+    public getMethod(): string {
         return this.action.split('@')[1];
     }
 }
