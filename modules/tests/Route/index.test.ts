@@ -29,11 +29,6 @@ describe('isMethodExist', () => {
     })
 });
 
-test('コントローラーのメソッドを実行する', () => {
-    const route = new Route('/test', new RouteResolver());
-    expect(route.execController(new Action('TestController@index'), new TestController())).resolves.toBeTruthy();
-});
-
 test('コントローラーのインスタンスがnullの場合は、例外を投げる', async () => {
     jest.spyOn(RouteResolver.prototype, 'resolve')
         .mockResolvedValue(new Promise(() => {
