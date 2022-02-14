@@ -3,7 +3,6 @@ import Controller from '../../Controllers';
 import Action from '../../Http/Action';
 import Route from '../../Route';
 import TestController from './TestController';
-// jest.mock('./../../Resolver/RouteResolver');
 
 describe('getControllerInstance', () => {
     test('Controllerのインスタンスを返す', async () => {
