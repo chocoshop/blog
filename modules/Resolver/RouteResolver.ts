@@ -5,8 +5,8 @@ const rootPath = require('app-root-path');
 export class RouteResolver {
     private routes: Routes = {};
     private action: Action|null = null;
-    public routesFilePath: string = `${rootPath}/routes.ts`;
-    public controllerDir: string =`${rootPath}/App/Http`;
+    protected routesFilePath: string = `${rootPath}/routes.ts`;
+    protected controllerDir: string =`${rootPath}/App/Http`;
 
     async resolve(path: string) {
         this.routes = await load<Routes>(this.routesFilePath);
@@ -14,7 +14,7 @@ export class RouteResolver {
         return this;
     }
 
-    createAction(path: string, routes: Routes): Action {
+    public createAction(path: string, routes: Routes): Action {
         for (const [route, action] of Object.entries(routes)) {
             if (path === route) {
                 return new Action(action);
@@ -23,11 +23,11 @@ export class RouteResolver {
         throw new Error('Route Not Registered');
     }
 
-    getAction() {
+    public getAction() {
         return this.action;
     }
 
-    public getControllerPath(): string|null {
+    public getControllerPath(): string {
         return `${this.controllerDir}/${this.action?.getController()}`
     }
 }
