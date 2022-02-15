@@ -1,3 +1,4 @@
+import NotFoundError from "../Error/NotFoundError";
 import Action from "../Http/Action";
 import load from "../Support/FileLoader";
 const rootPath = require('app-root-path');
@@ -20,7 +21,7 @@ export class RouteResolver {
                 return new Action(action);
             }
         }
-        throw new Error('Route Not Registered');
+        throw new NotFoundError('Route Not Registered');
     }
 
     public getAction() {
