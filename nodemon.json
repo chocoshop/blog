@@ -1,0 +1,5 @@
+{
+    "watch": ["./App/**/*.ts", "./modules/**/*.ts"],
+    "ext": "ts",
+    "exec": "npm run dev"
+}
