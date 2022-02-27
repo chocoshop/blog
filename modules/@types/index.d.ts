@@ -2,11 +2,10 @@ type Routes = {
     [path: string]: string
 }
 
-type Methods = '__invoke';
+type Methods = {
+    invoke?,
+}
 
-namespace Contracts {
-    interface Controller<T> {
-        // viewクラスができたら戻り値を縛る
-        [K in T]();
-    }
+type TController<T> = {
+    [P in keyof T]: T[P];
 }
