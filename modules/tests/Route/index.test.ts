@@ -1,5 +1,4 @@
 import { RouteResolver } from './../../Resolver/RouteResolver';
-import Controller from '../../Controllers';
 import Action from '../../Http/Action';
 import Route from '../../Route';
 import TestController from './TestController';
@@ -7,7 +6,7 @@ import TestController from './TestController';
 describe('getControllerInstance', () => {
     test('Controllerのインスタンスを返す', async () => {
         const route = new Route('/test', new RouteResolver());
-        expect(route.getControllerInstance('/var/www/modules/tests/Route/TestController')).resolves.toBeInstanceOf(Controller);
+        expect(route.getControllerInstance('/var/www/modules/tests/Route/TestController')).resolves.toBeInstanceOf(TestController);
     });
 
     test('コントローラーのファイルをimportできない場合は、nullを返す', async () => {
