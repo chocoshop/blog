@@ -1,5 +1,6 @@
 import { RouteResolver } from './../Resolver/RouteResolver';
 import Action from '../Http/Action';
+import NotFoundError from '../Error/NotFoundError';
 
 export default class Route {
     private url: string;
@@ -19,7 +20,7 @@ export default class Route {
         }
         const controller = await this.getControllerInstance(resolver.getControllerPath());
         if (controller === null) {
-            throw new Error('Could not load Controller');
+            throw new NotFoundError('Could not load Controller');
         }
         
         return this.execController(action, controller);
