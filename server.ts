@@ -8,8 +8,7 @@ const port = 80;
 const server = http.createServer(async (req: http.IncomingMessage, res: http.ServerResponse) => {
     try {
         const route =  new Route(req, res, new RouteResolver());
-        const response = await route.exec();
-        return res.end(response);
+        return await route.exec();
     } catch (e) {
         (new Handler()).render(res, e);
     }
