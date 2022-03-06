@@ -6,13 +6,8 @@ import Route from './modules/Route';
 const port = 80;
 
 const server = http.createServer(async (req: http.IncomingMessage, res: http.ServerResponse) => {
-    if (req.url === undefined) {
-        res.statusCode = 404;
-        return res.end();
-    }
-
     try {
-        const route =  new Route(req.url, new RouteResolver());
+        const route =  new Route(req, res, new RouteResolver());
         const response = await route.exec();
         return res.end(response);
     } catch (e) {
