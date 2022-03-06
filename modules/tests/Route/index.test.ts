@@ -1,6 +1,5 @@
 import * as http from 'http';
 import { RouteResolver } from './../../Resolver/RouteResolver';
-import Action from '../../Http/Action';
 import Route from '../../Route';
 import TestController from './TestController';
 
