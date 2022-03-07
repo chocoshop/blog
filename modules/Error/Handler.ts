@@ -9,7 +9,7 @@ export default class Handler {
                 res.write(e.message);
                 break;
             default:
-                break;
+                res.statusCode = 500;
         }
         console.log(e.message);
         res.end();
