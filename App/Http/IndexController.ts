@@ -1,11 +1,8 @@
-import * as http from 'http';
+import Controller from "../../modules/Http/Controller";
 
-export default class IndexController implements TController<{
-    getA: (req: http.IncomingMessage, res: http.ServerResponse) => http.ServerResponse;
-}>
+export default class IndexController extends Controller
 {
-    getA(req: http.IncomingMessage, res: http.ServerResponse): http.ServerResponse {
-        return res.end('aにきた');
+    getA() {
+        return this.res.end('aにきた');
     }
-
 }

@@ -19,7 +19,7 @@ export default class Route {
         this.resolver = resolver;
     }
 
-    async exec(): Promise<TController<Methods>|void> {
+    async exec(): Promise<TController|void> {
 
         const resolver = await this.resolver.resolve(this.url);
         const action = resolver.getAction();
@@ -33,24 +33,24 @@ export default class Route {
         return this.execController(action, controller);
     }
 
-    async execController(action: Action, controller: TController<Methods>): Promise<TController<Methods>|void> {
+    async execController(action: Action, controller: TController): Promise<TController|void> {
         const method = action.getMethod();
         if (this.isMethodExist(controller, method)) {
-            return controller[method](this.req, this.res);
+            return controller[method]();
         }
     }
 
     // 型安全に書く方法がわからない..読み込むモジュールがany型になるのと、default exportかそうでないかの区別がつかない
-    async getControllerInstance(path: string): Promise<TController<Methods>> {
+    async getControllerInstance(path: string): Promise<TController> {
         try {
             const controller = await import(path);
-            return new controller.default();
+            return new controller.default(this.req, this.res);
         } catch(e) {
             throw new NotFoundError('Could not load Controller');
         }
     }
 
-    isMethodExist(controller: TController<Methods>, method: string): method is (keyof typeof controller) {
+    isMethodExist(controller: TController, method: string): method is (keyof typeof controller) {
         return typeof controller[method as keyof typeof controller] === 'function';
     }
 }

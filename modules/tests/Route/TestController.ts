@@ -1,8 +1,6 @@
-type TestMethods = Methods & {
-    index(): object[];
-};
+import Controller from "../../Http/Controller";
 
-export default class TestController implements TController<TestMethods> {
+export default class TestController extends Controller {
     index() {
         return [];
     }

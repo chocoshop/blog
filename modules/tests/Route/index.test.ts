@@ -18,12 +18,12 @@ describe('getControllerInstance', () => {
 describe('isMethodExist', () => {
     test('存在するメソッドの場合は、trueを返す', () => {
         const route = new Route({url: '/test'} as http.IncomingMessage, {} as http.ServerResponse, new RouteResolver());
-        expect(route.isMethodExist(new TestController(), 'index')).toBe(true);
+        expect(route.isMethodExist(new TestController({} as http.IncomingMessage, {} as http.ServerResponse), 'index')).toBe(true);
     });
     
     test('存在しないメソッドの場合は、falseを返す', () => {
         const route = new Route({url: '/test'} as http.IncomingMessage, {} as http.ServerResponse, new RouteResolver());
-        expect(route.isMethodExist(new TestController(), 'notfound')).toBe(false);
+        expect(route.isMethodExist(new TestController({} as http.IncomingMessage, {} as http.ServerResponse), 'notfound')).toBe(false);
     })
 });
 
