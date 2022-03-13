@@ -1,10 +1,14 @@
 import ReactDOMServer from 'react-dom/server';
 import { Document } from './Document';
 import { Script } from './Script';
+import fs from 'fs';
 
-export const Page = (path: string) : string => {
-    // todo: publicなファイルへパスを変換をする
-    // todo: pages/dir配下のjsを配列で読んでscriptタグに変換する
-    const document = <Document><Script src={path} /></Document>;
+export const Page = async (path: string) : Promise<string> => {
+    const dir = 'public/' + path;
+    const files = await fs.promises.readdir(dir);
+    const scripts = files.map(file => {
+        return <Script src={'public/' + path + '/' + file} key={file} />;
+    })
+    const document = <Document>{scripts}</Document>;
     return ReactDOMServer.renderToString(document);
 };
