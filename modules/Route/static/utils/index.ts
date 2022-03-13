@@ -1,7 +1,7 @@
 import path from 'path';
 
-export const isAsset = (url: string, root = 'public'): boolean => {
-    return path.dirname(url).split('/').includes(root);
+export const isAsset = (url: string, root = 'public'): boolean => {    
+    return path.dirname(url).split('/')[1] === root;
 }
 
 export const filterByKey = (obj: { [s: string]: string }, serachKey: string): string|null => {
