@@ -1,8 +1,9 @@
 import Controller from "../../modules/Http/Controller";
+import { Page } from "../../modules/View/Page";
 
 export default class IndexController extends Controller
 {
-    getA() {
-        return this.res.end('aにきた');
+    public getA() {
+        return Page('pages/a');
     }
 }
