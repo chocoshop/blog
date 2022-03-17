@@ -3,7 +3,7 @@ const glob = require('glob');
 
 module.exports = {
     mode: 'development',
-    entry: Object.fromEntries(glob.sync('./pages/**/**.tsx').map(pathInfo => [path.dirname(pathInfo), path.resolve('.', pathInfo)])),
+    entry: Object.fromEntries(glob.sync('./pages/**/index.tsx').map(pathInfo => [path.dirname(pathInfo), path.resolve('.', pathInfo)])),
     output: {
         path: path.join(__dirname, 'public'),
         // 本番はhashした値にする
