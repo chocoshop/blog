@@ -1,4 +1,4 @@
 module.exports = {
-    '/' : 'Controller@get',
+    '/' : 'IndexController@get',
     '/a' : 'IndexController@getA',
 }
