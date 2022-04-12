@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { ThemeContext } from '../pages/root';
+import { ThemeContext } from './contexts/global';
 import { Primary } from './atoms/Button';
 
 export const Header: React.FC = () => {
