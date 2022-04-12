@@ -6,7 +6,7 @@ import Route from './modules/Route';
 import NotFoundError from './modules/Error/NotFoundError';
 import StaticRoute from './modules/Route/static';
 
-const port = 80;
+const port = process.env.PORT;
 
 const server = http.createServer(async (req: http.IncomingMessage, res: http.ServerResponse) => {
     try {
@@ -30,5 +30,5 @@ const server = http.createServer(async (req: http.IncomingMessage, res: http.Ser
 });
 
 server.listen(port, () => {
-    console.log('listen to port 80');
+    console.log(`listen to port ${process.env.PORT}`);
 })
