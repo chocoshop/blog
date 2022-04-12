@@ -3,7 +3,7 @@ import { Document } from './Document';
 import { Script } from './Script';
 import fs from 'fs';
 
-export const Page = async (path: string) : Promise<string> => {
+export const page = async (path: string) : Promise<string> => {
     const dir = 'public/' + path;
     const files = await fs.promises.readdir(dir);
     const scripts = files.map(file => {
