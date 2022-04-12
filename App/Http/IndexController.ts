@@ -4,10 +4,10 @@ import { page } from "../../modules/View/Page";
 export default class IndexController extends Controller
 {
     public get() {
-        return page('pages/root');
+        return page('root');
     }
 
     public getA() {
-        return page('pages/a');
+        return page('a');
     }
 }
