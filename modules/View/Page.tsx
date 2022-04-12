@@ -4,8 +4,8 @@ import { Script } from './Script';
 import fs from 'fs';
 import NotFoundError from '../Error/NotFoundError';
 
-export const page = async (path: string) : Promise<string> => {
-    const dir = 'pages/' + path;
+export const page = async (path: string, root = '/pages') : Promise<string> => {
+    const dir = root + path;
     try {
         const files = await fs.promises.readdir(dir);   
         if (files.length === 0) {
