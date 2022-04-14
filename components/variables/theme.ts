@@ -2,6 +2,7 @@ const theme = {
     colors: {
         elements: {
             bgColor: '#fffffe',
+            bgStrong: '#4da8a338',
             headLine: '#272343',
             paragraph: '#2d334a',
             primaryBtn: '#ffd803',
