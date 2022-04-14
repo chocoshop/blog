@@ -7,7 +7,7 @@ export const Header: React.FC = () => {
     const context = useContext(ThemeContext);
     return (
         <StyledHeader theme={context}>
-            <AppName theme={context}>Auction</AppName>
+            <AppName theme={context}>LOGO</AppName>
             <Link theme={context} href='/components'>
                 <Primary text="components" />
             </Link>
@@ -17,6 +17,9 @@ export const Header: React.FC = () => {
 
 const StyledHeader = styled.header`
     display: flex;
+    z-index: 100;
+    position: fixed;
+    background-color: ${({theme}) => theme.colors.illustration.secondary};
     width: 100%;
     justify-content: space-between;
     padding: ${props => props.theme.spacing.padding.s};
