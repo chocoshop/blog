@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { Card } from '../../components/atoms/Card';
+import { ItemCard } from '../../components/feature/Purchase/ItemCard';
 import { Chip } from '../../components/atoms/Chip';
 import { ThemeContext } from '../../components/contexts/global';
 import { Header } from '../../components/header';
@@ -8,18 +8,10 @@ import theme from '../../components/variables/theme';
 
 const Main = styled.main`
     position: relative;
-    background-color: ${({theme}) => theme.colors.illustration.secondary};
     padding-top: ${({theme}) => theme.spacing.padding.m};
     & > h1 {
         margin: ${({theme}) => theme.spacing.margin.m};
     }
-`;
-
-const Title = styled.h1`
-    font-size: ${({theme}) => theme.typography.h1};
-    color: ${({theme}) => theme.colors.elements.headLine};
-    font-weight: bold;
-    padding-left: 10%;
 `;
 
 const Content = styled.section`
@@ -30,7 +22,7 @@ const Content = styled.section`
 
 const Container = styled.div`
     width: 90%;
-    margin: auto;
+    margin: 40px auto 0;
 `;
 
 const CardGrid = styled.div`
@@ -43,46 +35,46 @@ const CardGrid = styled.div`
 `;
 
 const ChipWrapper = styled.div`
-    position: absolute;
-    right: 10%;
+    margin-bottom: 20px;
+    margin-left: auto;
 `
 
 const items = [
     {
         id: 1,
-        title: 'Item1',
+        title: 'Item',
         price: 1000,
-        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
+        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
     {
         id: 2,
-        title: 'Item1',
+        title: 'Item2',
         price: 1000,
-        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
+        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
     {
         id: 3,
-        title: 'Item1',
+        title: 'Item3',
         price: 1000,
-        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
+        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
     {
         id: 4,
-        title: 'Item1',
+        title: 'Item4',
         price: 1000,
-        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
+        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
     {
         id: 5,
-        title: 'Item1',
+        title: 'Item5',
         price: 1000,
-        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
+        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
     {
         id: 6,
-        title: 'Item1',
+        title: 'Item6',
         price: 1000,
-        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
+        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
 ];
 
@@ -91,15 +83,14 @@ const App =
     <ThemeContext.Provider value={theme}>
         <Header />
         <Main theme={theme}>
+            <Container theme={theme}>
             <ChipWrapper>
                 <Chip>予約した商品が値下げされました。</Chip>
             </ChipWrapper>
-            <Title theme={theme}>商品トップ</Title>
-            <Container theme={theme}>
                 <Content theme={theme}>
                     <CardGrid>
                         {items.map(item => {
-                            return <Card {...item} />
+                            return <ItemCard {...item} />
                         })}
                     </CardGrid>
                 </Content>
