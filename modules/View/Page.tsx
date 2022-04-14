@@ -2,13 +2,28 @@ import ReactDOMServer from 'react-dom/server';
 import { Document } from './Document';
 import { Script } from './Script';
 import fs from 'fs';
+import NotFoundError from '../Error/NotFoundError';
 
-export const Page = async (path: string) : Promise<string> => {
-    const dir = 'public/' + path;
-    const files = await fs.promises.readdir(dir);
-    const scripts = files.map(file => {
-        return <Script src={'public/' + path + '/' + file} key={file} />;
-    })
-    const document = <Document>{scripts}</Document>;
+export const page = async (path: string, root = 'pages/') : Promise<string> => {
+    const dir = root + path;
+    try {
+        const files = await fs.promises.readdir(dir);   
+        if (files.length === 0) {
+            throw new NotFoundError();
+        }
+    } catch(e) {
+        if (e.code === 'ENOENT') {
+            throw new NotFoundError();
+        }
+        if (e instanceof NotFoundError) {
+            throw e;
+        }
+        throw new Error();
+    }
+
+    const document = 
+        <Document>
+            <Script src={'public/pages/' + path + '/bundle.js'} />
+        </Document>;
     return ReactDOMServer.renderToString(document);
 };

@@ -1,5 +1,4 @@
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 
-const Element = <div>here is root</div>
-
-ReactDOM.render(Element, document.getElementById('app'));
+const Component = <h1>here is root</h1>;
+ReactDOM.render(Component, document.getElementById('app'));
