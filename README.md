@@ -1,4 +1,4 @@
-# blog
+# codes for my blog
 - without express using simple node.js server.
 - Using
   - TypeScript
