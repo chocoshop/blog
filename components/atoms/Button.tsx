@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import theme from '../variables/theme';
 
-export const Primary: React.FC<{text: string}> = ({text}) => {
+export const Primary: React.FC<{text: string, onClick?: () => void}> = ({text, onClick}) => {
     return (
-        <Button theme={theme}>{text}</Button>
+        <Button theme={theme} onClick={onClick}>{text}</Button>
     )
 }
 
@@ -13,4 +13,5 @@ const Button = styled.button`
     font-weight: bold;
     padding: 0.5rem;
     border-radius: 7.5px;
-`
+    cursor: pointer;
+`;
