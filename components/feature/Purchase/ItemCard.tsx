@@ -9,12 +9,14 @@ export const ItemCard : React.FC<Item> = (item) => {
     return(
         <>
         <Wrapper theme={theme} key={item.id}>
-            <h4>{item.title}</h4>
-                <span>¥{item.price}</span>
             <img src="public/images/dummy1.png" alt="ダミー画像" />
-            <AlignLeft>
-                <Primary text="予約する" onClick={() => toggleModal(!isModalOpen)}/>
-            </AlignLeft>
+            <Content>
+                <h4>{item.title}</h4>
+                <span>¥{item.price}</span>
+                <ContentBottom>
+                    <Primary text="予約する" onClick={() => toggleModal(!isModalOpen)}/>
+                </ContentBottom>
+            </Content>
         </Wrapper>
         {isModalOpen && 
             <Bg onClick={() => toggleModal(!isModalOpen)}>
@@ -24,6 +26,38 @@ export const ItemCard : React.FC<Item> = (item) => {
         </>
     )
 }
+
+const Wrapper = styled.div`
+    position: relative;
+    padding: 1.5rem ;
+    border-radius: 5px 5px 0 0;
+    border-bottom: solid;
+    display: flex;
+    align-items: baseline;
+    flex-flow: column;
+    & > img {
+        width: 100%;
+    }
+    & > h4 {
+        font-size: 1.5rem;
+    }
+    & > p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+`;
+
+const Content = styled.div`
+    width: 100%;
+    margin-top: auto;
+`;
+
+const ContentBottom = styled.div`
+    width: 100%;
+    text-align: right;
+    margin-right: -2.5rem;
+`;
 
 const Bg : React.FC<{onClick: () => void, children: ReactElement}> = ({onClick, children}) => {
     return (
@@ -39,31 +73,7 @@ const BgSkin = styled.div`
     right: 0;
     top: 60px;
     margin: 0 auto;
-    padding-top: 100px;
+    padding-top: 75px;
     z-index: 2;
     background-color: ${({theme}) => theme.colors.elements.bgStrong};
-`;
-
-const Wrapper = styled.div`
-    position: relative;
-    padding: 1.5rem ;
-    border-radius: 5px 5px 0 0;
-    border-bottom: solid;
-    & > img {
-        width: 100%;
-    }
-    & > h4 {
-        font-size: 1.5rem;
-    }
-    & > p {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-`;
-
-const AlignLeft = styled.div`
-    width: 100%;
-    text-align: right;
-    margin-right: -2.5rem;
 `;

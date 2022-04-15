@@ -5,11 +5,9 @@ import theme from "../../variables/theme";
 export const ItemModal: React.FC<Item> = item => {
     return (
         <Wrapper theme={theme} onClick={(e) => {e.stopPropagation()}}>
-            <h4>{item.title}</h4>
             <img src="public/images/dummy1.png" alt="ダミー画像" />
-            <br />
+            <h4>{item.title}</h4>
             <span>¥{item.price}</span>
-            <br />
             <p>{item.description}</p>
             <ButtonWrapper>
                 <Primary text="予約を確定する"/>
