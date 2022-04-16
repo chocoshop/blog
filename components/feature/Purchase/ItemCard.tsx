@@ -1,11 +1,24 @@
 import styled from "styled-components";
 import theme from "../../variables/theme";
 import { Primary } from "../../atoms/Button";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useMemo, useState } from "react";
 import { ItemModal } from "./ItemModal";
 
-export const ItemCard : React.FC<Item> = (item) => {
+type Props = {
+    item: Item
+}
+
+export const ItemCard : React.FC<Props> = (props) => {
     const [isModalOpen, toggleModal] = useState(false);
+    const [item, setItem] = useState(props.item);
+    const [isBooked, setIsBooked] = useState(false);
+    const book = (itemId: number) => {
+        const item = bookItem(itemId);
+        if (item) {
+            setItem(item);
+            setIsBooked(true);
+        }
+    }
     return(
         <>
         <Wrapper theme={theme} key={item.id}>
@@ -14,17 +27,33 @@ export const ItemCard : React.FC<Item> = (item) => {
                 <h4>{item.title}</h4>
                 <span>¥{item.price}</span>
                 <ContentBottom>
-                    <Primary text="予約する" onClick={() => toggleModal(!isModalOpen)}/>
+                    <Primary text={isBooked ? "予約済み": "予約する"} onClick={() => toggleModal(!isModalOpen)}/>
                 </ContentBottom>
             </Content>
         </Wrapper>
         {isModalOpen && 
-            <Bg onClick={() => toggleModal(!isModalOpen)}>
-                <ItemModal {...item}/>
+            <Bg onClick={() => toggleModal(!isModalOpen)} theme={theme}>
+                <ItemModal item={item} bookHandler={() => book(item.id)} isBooked={isBooked} />
             </Bg>
         }
         </>
     )
+}
+
+const bookItem = (itemId: number): Item|null => {
+    try{
+        // const item = fetch(url);
+        const item = {
+            id: 1,
+            title: 'マグロ',
+            price: 950,
+            description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
+        };
+        return item;
+    } catch(e) {
+        console.error(e);
+    }
+    return null;
 }
 
 const Wrapper = styled.div`
@@ -59,13 +88,7 @@ const ContentBottom = styled.div`
     margin-right: -2.5rem;
 `;
 
-const Bg : React.FC<{onClick: () => void, children: ReactElement}> = ({onClick, children}) => {
-    return (
-        <BgSkin onClick={onClick} theme={theme}>{children}</BgSkin>
-    )
-}
-
-const BgSkin = styled.div`
+const Bg = styled.div`
     width: 100%;
     height: 100vh;
     position: fixed;

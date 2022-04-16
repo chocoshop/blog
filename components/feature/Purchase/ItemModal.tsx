@@ -2,7 +2,13 @@ import styled from "styled-components";
 import { Primary } from "../../atoms/Button";
 import theme from "../../variables/theme";
 
-export const ItemModal: React.FC<Item> = item => {
+type Props = {
+    item: Item,
+    isBooked: boolean,
+    bookHandler: (itemId: number) => void,
+}
+
+export const ItemModal: React.FC<Props> = ({item, isBooked, bookHandler}) => {
     return (
         <Wrapper theme={theme} onClick={(e) => {e.stopPropagation()}}>
             <img src="public/images/dummy1.png" alt="ダミー画像" />
@@ -10,7 +16,7 @@ export const ItemModal: React.FC<Item> = item => {
             <span>¥{item.price}</span>
             <p>{item.description}</p>
             <ButtonWrapper>
-                <Primary text="予約を確定する"/>
+                <Primary text={isBooked ? "予約済み": "予約する"} onClick={() => bookHandler(item.id)}/>
             </ButtonWrapper>
         </Wrapper>
     )
