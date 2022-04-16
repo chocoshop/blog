@@ -76,7 +76,7 @@ const App =
                     <h1>商品一覧</h1>
                     <CardGrid>
                         {items.map(item => {
-                            return <ItemCard {...item} />
+                            return <ItemCard item={item} />
                         })}
                     </CardGrid>
                 </section>
