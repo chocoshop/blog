@@ -6,6 +6,7 @@ const theme = {
             headLine: '#272343',
             paragraph: '#2d334a',
             primaryBtn: '#ffd803',
+            disabledBtn: '#FFD90364',
             btnText: '#272343',
             anchor: '#272343',
             cardBg: '#272343',

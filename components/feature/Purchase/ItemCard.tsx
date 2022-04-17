@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import theme from "../../variables/theme";
-import { Primary } from "../../atoms/Button";
+import { DisabledButton, PrimaryButton } from "../../atoms/Button";
 import React, { ReactElement, useMemo, useState } from "react";
 import { ItemModal } from "./ItemModal";
 
@@ -12,11 +12,13 @@ export const ItemCard : React.FC<Props> = (props) => {
     const [isModalOpen, toggleModal] = useState(false);
     const [item, setItem] = useState(props.item);
     const [isBooked, setIsBooked] = useState(false);
+    const [hasBooked, setHasBooked] = useState(false);
     const book = (itemId: number) => {
         const item = bookItem(itemId);
         if (item) {
             setItem(item);
             setIsBooked(true);
+            setHasBooked(true);
         }
     }
     return(
@@ -27,13 +29,20 @@ export const ItemCard : React.FC<Props> = (props) => {
                 <h4>{item.title}</h4>
                 <span>¥{item.price}</span>
                 <ContentBottom>
-                    <Primary text={isBooked ? "予約済み": "予約する"} onClick={() => toggleModal(!isModalOpen)}/>
+                    {isBooked ?
+                        <DisabledButton text="☑️ 予約済み"/>
+                        :
+                        <PrimaryButton text="予約する" onClick={() => toggleModal(!isModalOpen)} />
+                    }
                 </ContentBottom>
             </Content>
         </Wrapper>
         {isModalOpen && 
             <Bg onClick={() => toggleModal(!isModalOpen)} theme={theme}>
-                <ItemModal item={item} bookHandler={() => book(item.id)} isBooked={isBooked} />
+                <ItemModal
+                    item={item}
+                    bookHandler={() => book(item.id)}
+                    isBooked={isBooked} hasBooked={hasBooked} />
             </Bg>
         }
         </>

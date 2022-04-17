@@ -1,14 +1,15 @@
 import styled from "styled-components";
-import { Primary } from "../../atoms/Button";
+import { PrimaryButton } from "../../atoms/Button";
 import theme from "../../variables/theme";
 
 type Props = {
     item: Item,
     isBooked: boolean,
+    hasBooked: boolean,
     bookHandler: (itemId: number) => void,
 }
 
-export const ItemModal: React.FC<Props> = ({item, isBooked, bookHandler}) => {
+export const ItemModal: React.FC<Props> = ({item, isBooked, hasBooked, bookHandler}) => {
     return (
         <Wrapper theme={theme} onClick={(e) => {e.stopPropagation()}}>
             <img src="public/images/dummy1.png" alt="ダミー画像" />
@@ -16,8 +17,11 @@ export const ItemModal: React.FC<Props> = ({item, isBooked, bookHandler}) => {
             <span>¥{item.price}</span>
             <p>{item.description}</p>
             <ButtonWrapper>
-                <Primary text={isBooked ? "予約済み": "予約する"} onClick={() => bookHandler(item.id)}/>
+                <PrimaryButton text={isBooked ? "☑️ 予約済み": "予約する"} onClick={() => bookHandler(item.id)}/>
             </ButtonWrapper>
+            <BookedMessage theme={theme}>
+                {hasBooked && '予約が完了しました！'}
+            </BookedMessage>
         </Wrapper>
     )
 }
@@ -38,6 +42,14 @@ const Wrapper = styled.div`
     & > p {
         overflow-wrap: break-word;
     }
+`;
+
+const BookedMessage = styled.p`
+    color: ${({theme}) => theme.colors.elements.anchor};
+    height: 1.5rem;
+    text-align: end;
+    padding-top: 0.5rem;
+    display: block;
 `;
 
 const ButtonWrapper = styled.div`
