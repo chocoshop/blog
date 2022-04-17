@@ -21,6 +21,7 @@ export const ItemModal: React.FC<Props> = ({item, itemStatus, bookHandler}) => {
             <img src="public/images/dummy1.png" alt="ダミー画像" />
             <h4>{item.title}</h4>
             <span>¥{item.price}</span>
+            <p>発売日: {item.release_date}</p>
             <p>{item.description}</p>
             <ButtonWrapper>
                 <PrimaryButton text={itemStatus.isBooked ? "☑️ 予約済み": "予約する"} onClick={() => bookHandler(item.id)}/>

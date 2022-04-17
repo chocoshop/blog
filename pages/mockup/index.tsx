@@ -32,36 +32,42 @@ const items = [
         id: 1,
         title: 'マグロ',
         price: 1000,
-        description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
+        release_date: '2022年04月30日',
+        description: '販売: xxxxx'
     },
     {
         id: 2,
         title: 'カツオ',
         price: 1000,
+        release_date: '2022年04月30日',
         description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
     {
         id: 3,
         title: 'サバ',
         price: 1000,
+        release_date: '2022年04月30日',
         description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
     {
         id: 4,
         title: 'イワシ',
         price: 1000,
+        release_date: '2022年04月30日',
         description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
     {
         id: 5,
         title: 'お茶',
         price: 1000,
+        release_date: '2022年04月30日',
         description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
     {
         id: 6,
         title: 'レモン',
         price: 1000,
+        release_date: '2022年04月30日',
         description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
     },
 ];

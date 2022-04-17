@@ -60,7 +60,8 @@ const bookItem = (itemId: number): Item|null => {
             id: 1,
             title: 'マグロ',
             price: 950,
-            description: 'TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText'
+            release_date: '',
+            description: '販売: xxxxx',
         };
         return item;
     } catch(e) {
