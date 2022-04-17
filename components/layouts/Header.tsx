@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { ThemeContext } from '../contexts/global';
-import { Primary } from '../atoms/Button';
+import { PrimaryButton } from '../atoms/Button';
 import { Bell } from '../atoms/Bell';
 
 export const Header: React.FC = () => {
@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
             </a>
             <Menu>
                 <Link theme={context} href='/components'>
-                    <Primary text="components" />
+                    <PrimaryButton text="components" />
                 </Link>
                 <BellWrapper>
                     <Bell />
