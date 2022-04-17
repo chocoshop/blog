@@ -20,6 +20,9 @@ export const ItemCard : React.FC<Props> = (props) => {
             setItem(item);
             setIsBooked(true);
             setBookingResult(bookingResults.SUCCESS);
+        } else {
+            setIsBooked(false);
+            setBookingResult(bookingResults.FAIL);
         }
     }
     return(
