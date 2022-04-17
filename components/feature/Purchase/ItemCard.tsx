@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import theme from "../../variables/theme";
 import { DisabledButton, PrimaryButton } from "../../atoms/Button";
-import React, { ReactElement, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { ItemModal } from "./ItemModal";
+import { bookingResults, BookingResult } from "./bookingResult";
 
 type Props = {
     item: Item
@@ -12,13 +13,13 @@ export const ItemCard : React.FC<Props> = (props) => {
     const [isModalOpen, toggleModal] = useState(false);
     const [item, setItem] = useState(props.item);
     const [isBooked, setIsBooked] = useState(false);
-    const [hasBooked, setHasBooked] = useState(false);
+    const [bookingResult, setBookingResult] = useState<BookingResult>(bookingResults.UNKNOWN);
     const book = (itemId: number) => {
         const item = bookItem(itemId);
         if (item) {
             setItem(item);
             setIsBooked(true);
-            setHasBooked(true);
+            setBookingResult(bookingResults.SUCCESS);
         }
     }
     return(
@@ -42,7 +43,7 @@ export const ItemCard : React.FC<Props> = (props) => {
                 <ItemModal
                     item={item}
                     bookHandler={() => book(item.id)}
-                    isBooked={isBooked} hasBooked={hasBooked} />
+                    itemStatus={{isBooked: isBooked, bookingResult: bookingResult}} />
             </Bg>
         }
         </>

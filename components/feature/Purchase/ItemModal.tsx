@@ -1,15 +1,21 @@
 import styled from "styled-components";
 import { PrimaryButton } from "../../atoms/Button";
 import theme from "../../variables/theme";
+import { BookingResult, bookingResults } from "./bookingResult";
+
+type ItemStatus = {
+    isBooked: boolean,
+    bookingResult: BookingResult,
+}
 
 type Props = {
     item: Item,
-    isBooked: boolean,
-    hasBooked: boolean,
+    itemStatus: ItemStatus,
     bookHandler: (itemId: number) => void,
 }
 
-export const ItemModal: React.FC<Props> = ({item, isBooked, hasBooked, bookHandler}) => {
+export const ItemModal: React.FC<Props> = ({item, itemStatus, bookHandler}) => {
+    let message = handleBookingMessage(itemStatus.bookingResult);
     return (
         <Wrapper theme={theme} onClick={(e) => {e.stopPropagation()}}>
             <img src="public/images/dummy1.png" alt="ダミー画像" />
@@ -17,13 +23,23 @@ export const ItemModal: React.FC<Props> = ({item, isBooked, hasBooked, bookHandl
             <span>¥{item.price}</span>
             <p>{item.description}</p>
             <ButtonWrapper>
-                <PrimaryButton text={isBooked ? "☑️ 予約済み": "予約する"} onClick={() => bookHandler(item.id)}/>
+                <PrimaryButton text={itemStatus.isBooked ? "☑️ 予約済み": "予約する"} onClick={() => bookHandler(item.id)}/>
             </ButtonWrapper>
             <BookedMessage theme={theme}>
-                {hasBooked && '予約が完了しました！'}
+                {message}
             </BookedMessage>
         </Wrapper>
     )
+}
+
+const handleBookingMessage = (bookingResult: BookingResult) :string|null => {
+    if (bookingResult === bookingResults.SUCCESS) {
+        return '予約が完了しました！';
+    }
+    if (bookingResult === bookingResults.FAIL) {
+        return '予約に失敗しました';
+    }
+    return null;
 }
 
 const Wrapper = styled.div`
