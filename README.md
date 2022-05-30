@@ -1,5 +1,6 @@
 # Overview
-TSでMVCのフレームワーク作る実験。TSの機構や参考にするLaravelの内部実装を学ぶ
+TSでMVCのフレームワーク作る実験。TSの機構や参考にするLaravelの内部実装を学ぶ。
+勉強的な意味合いが強いのでドキュメント整備はもう少し後になるかと思います。
 
 # how to work
 - register controller in route.ts
