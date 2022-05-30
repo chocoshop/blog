@@ -1,5 +1,5 @@
 # Overview
-TSでMVCのフレームワーク作る実験。TSや参考にするLaravelの内部実装を学ぶ
+TSでMVCのフレームワーク作る実験。TSの機構や参考にするLaravelの内部実装を学ぶ
 
 # how to work
 npm run dev
